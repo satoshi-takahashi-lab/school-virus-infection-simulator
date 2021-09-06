@@ -2,9 +2,10 @@
 ## Overview
 School-Virus-Infection-Simulator (SVIS) is a tool to simulate the spread of virus infection at a school.<br>
 SVIS simulates students' behavior based on their lesson schedule, classrooms volume, classrooms air change rate, and infectability of the virus.<br>
+***You can run SVIS by its executable file on Windows.***
 
 ## Usage
-`python main.py` or `execute svis.exe`
+`python main.py` or run `svis.exe`
 
 ## Requirements
 
@@ -338,9 +339,7 @@ Please note that exposed_limit_days, infecting_exposed_limit_days, and infected_
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_sier.png`</a>** describes the daily number of each status student.<br>
 
-<img src="https://user-images.githubusercontent.com/89981267/132156983-d704df30-a1b5-43b8-93ca-e977c615350f.png" width="500"><br>
-
-
+<img src="https://user-images.githubusercontent.com/89981267/132248366-3cee0731-3186-48d5-ae82-6577f7f0cf9f.png" width="500"><br>
 
 ## References
 

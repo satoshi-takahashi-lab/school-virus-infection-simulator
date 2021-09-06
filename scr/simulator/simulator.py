@@ -13,7 +13,10 @@ def simulate(lesson_day, current_step, agent_list, df_agent_schedule, df_classro
     list_current_lesson = []
     for temp_agent in agent_list:
         temp_lesson = df_agent_schedule.at[current_step, temp_agent.get_name()]
-        if temp_lesson is not None:
+        if temp_lesson is None:
+            temp_agent.set_lesson('')
+            temp_agent.set_place('')
+        else:
             temp_agent.set_lesson(temp_lesson)
             temp_agent.set_place(df_classroom.at[temp_lesson, 'classroom'])
             list_current_lesson.append(temp_lesson)
