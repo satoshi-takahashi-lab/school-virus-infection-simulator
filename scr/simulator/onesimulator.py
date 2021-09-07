@@ -60,7 +60,7 @@ def onedaysimulation(agent_list, lesson_list, one_calender, dict_schedule):
             oneday_infection_log.append(logger.infection_rate_logging(one_calender[0], current_step, lesson_list, infection_rate_dic))
     else:
         # Holiday.
-        current_step = 0
+        current_step = 1
         infection_rate_dic = {}
         # Store logs.
         temp_agent_status, temp_agent_status_count = logger.agent_logging(one_calender[0], current_step, agent_list)

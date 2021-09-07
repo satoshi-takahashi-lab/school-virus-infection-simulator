@@ -339,7 +339,7 @@ Please note that exposed_limit_days, infecting_exposed_limit_days, and infected_
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_sier.png`</a>** describes the daily number of each status student.<br>
 
-<img src="https://user-images.githubusercontent.com/89981267/132248366-3cee0731-3186-48d5-ae82-6577f7f0cf9f.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89982386/132281889-b4bf4a61-1809-45d1-9a71-a3e4a2df1ba3.png" width="500"><br>
 
 ## References
 

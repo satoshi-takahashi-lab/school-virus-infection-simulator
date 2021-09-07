@@ -34,16 +34,16 @@ def chart_generate():
 
     # Prepare data.
     for idx, one_file in enumerate(agent_status_logger_count_files):
-        # Read and concat the agent status count data. Use only step=0 data for each day.
+        # Read and concat the agent status count data. Use only step=1 data for each day.
         if idx == 0:
             df_agent_status_logger_count = pd.read_csv(one_file, encoding="utf_8_sig")
             temp_agent_num = df_agent_status_logger_count.loc[0, config.STATUSLIST].sum()
             df_agent_status_logger_count[name_suspectible] = df_agent_status_logger_count[config.SUSCEPTIBLE] + df_agent_status_logger_count[config.PRE_EXPOSED]
-            df_agent_status_logger_count = df_agent_status_logger_count[df_agent_status_logger_count["step"] == 0]
+            df_agent_status_logger_count = df_agent_status_logger_count[df_agent_status_logger_count["step"] == 1]
         else:
             temp_df = pd.read_csv(one_file, encoding="utf_8_sig")
             temp_df[name_suspectible] = temp_df[config.SUSCEPTIBLE] + temp_df[config.PRE_EXPOSED]
-            df_agent_status_logger_count = pd.concat([df_agent_status_logger_count, temp_df[temp_df["step"] == 0]], axis=1)
+            df_agent_status_logger_count = pd.concat([df_agent_status_logger_count, temp_df[temp_df["step"] == 1]], axis=1)
 
     generate_sier_graph(df_agent_status_logger_count, temp_agent_num, name_suspectible, multi_flag)
     generate_pe_graph(df_agent_status_logger_count, temp_agent_num, multi_flag)
