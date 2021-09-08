@@ -37,15 +37,15 @@ SVIS outputs following graphs and csv files to <a href="#directory-structure">`o
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_sier.png`</a>** describes the daily number of each status student.<br>
 The filled area shows the standard deviation, and the line shows the average.<br>
-<img src="https://user-images.githubusercontent.com/89981267/132156495-ad67de5a-18a3-4235-b74d-32c58653e196.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89982386/132511777-84c762b8-726c-4861-ac5c-6b6280b7b374.png" width="500"><br>
 <br>
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_pe.png`</a>** describes the daily number of newly infected students.<br>
-<img src="https://user-images.githubusercontent.com/89981267/132156452-e1d802d0-6800-4d84-bdef-535e69619cae.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89982386/132511861-1afa2c4e-12fa-4ba2-b96c-d236bd952dad.png" width="500"><br>
 <br>
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_i_boxplot.png`</a>** describes the total number of infected students.<br>
-<img src="https://user-images.githubusercontent.com/89981267/132156454-5e8c5237-d388-48d5-8287-57d01123ff11.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89982386/132511904-8e644e69-68af-456f-99d7-0a6e2226dfdb.png" width="500"><br>
 
 ***
 
@@ -91,15 +91,16 @@ daycount,step,S,P_E,E,I_E,I,R
 **<a href="#directory-structure">`simXXX_classroom_infection_rate_logger.csv`</a>** describes the infection_rate of each classroom.<br>
 
 ```
-daycount, step, lesson0-0_classroom, lesson0-1_classroom, lesson0-2_classroom, lesson0-3_classroom, lesson1-0_classroom, lesson1-1_classroom, lesson1-2_classroom, lesson1-3_classroom
-0, 0, classroom0, classroom1, classroom2, classroom3, -, -, -, -
-0, 1, 0, 0.01488806, 0, 0, classroom0, classroom1, classroom2, classroom3
-0, 2, -, -, -, -, -, -, -, -
-0, 3, -, -, -, -, -, -, -, -
-1, 0, classroom0, classroom1, classroom2, classroom3, -, -, -, -
-1, 1, 0, 0.01488806, 0, 0, classroom0, classroom1, classroom2, classroom3
-1, 2, -, -, -, -, -, -, -, -
-1, 3, -, -, -, -, -, -, -, -
+daycount, step, lesson0-0_classroom, lesson0-1_classroom, lesson0-2_classroom, lesson0-3_classroom, lesson1-0_classroom, ... , lesson0-0_infection_rate, lesson0-1_infection_rate, lesson0-2_infection_rate, lesson0-3_infection_rate, lesson1-0_infection_rate, ...
+
+0, 0, classroom0, classroom1, classroom2, classroom3, -, ... , 0, 0.01488806, 0, 0, -, ...
+0, 1, -, -, -, -, classroom0, ... , -, -, -, -, 0, ...
+0, 2, -, -, -, -, -, ... -, -, -, -, -, ...
+0, 3, -, -, -, -, -, ... -, -, -, -, -, ...
+1, 0, classroom0, classroom1, classroom2, classroom3, -, ... , 0, 0.01488806, 0, 0, -, ...
+1, 1, -, -, -, -, classroom0, ... , -, -, -, -, 0, ...
+1, 2, -, -, -, -, -, ... -, -, -, -, -, ...
+1, 3, -, -, -, -, -, ... -, -, -, -, -, ...
 ```
 
 ## Infection Probability
@@ -339,7 +340,7 @@ Please note that exposed_limit_days, infecting_exposed_limit_days, and infected_
 
 **<a href="#directory-structure">`agent_status_logger_summary_count_sier.png`</a>** describes the daily number of each status student.<br>
 
-<img src="https://user-images.githubusercontent.com/89982386/132281889-b4bf4a61-1809-45d1-9a71-a3e4a2df1ba3.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89982386/132512941-c0397f00-a3d3-42ee-8282-8200aa1dfe2a.png" width="500"><br>
 
 ## References
 

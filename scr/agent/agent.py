@@ -47,6 +47,10 @@ class Agent:
     def get_lesson(self):
         return self.__lesson
 
+    def set_initial_infected(self):
+        self.__status = config.INFECTING_EXPOSED
+        self.__infecting_exposed_days = -1
+
     def countday(self):
         if self.get_status() == config.PRE_EXPOSED:
             # Pre exposed: Infected yesterday.
@@ -55,19 +59,19 @@ class Agent:
         elif self.get_status() == config.EXPOSED:
             # Exposed: Not yet infectious after infection.
             self.__exposed_days += 1
-            if self.__exposed_days > config.EXPOSED_LIMIT_DAYS:
+            if self.__exposed_days >= config.EXPOSED_LIMIT_DAYS:
                 self.set_status(config.INFECTING_EXPOSED)
                 # self.__infecting_exposed_days = 0
         elif self.get_status() == config.INFECTING_EXPOSED:
             # Infecting exposed: Infectious condition.
             self.__infecting_exposed_days += 1
-            if self.__infecting_exposed_days > config.INFECTING_EXPOSED_LIMIT_DAYS:
+            if self.__infecting_exposed_days >= config.INFECTING_EXPOSED_LIMIT_DAYS:
                 self.set_status(config.INFECTED)
                 # self.__infected_days = 0
         elif self.get_status() == config.INFECTED:
             # Infected: Not infectious but with symptoms.
             self.__infected_days += 1
-            if self.__infected_days > config.INFECTED_LIMIT_DAYS:
+            if self.__infected_days >= config.INFECTED_LIMIT_DAYS:
                 self.set_status(config.RECOVERED)
 
     def get_exposed_days(self):
