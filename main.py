@@ -5,10 +5,10 @@
 # http://opensource.org/licenses/mit-license.php
 #
 
-from scr import config, utils
-from scr.generator import input_generator
-from scr.simulator import onesimulator
-from scr.chart import chart_generater
+from src import config, utils
+from src.generator import input_generator
+from src.simulator import onesimulator
+from src.chart import summary_generator, chart_generator
 
 
 def main():
@@ -36,7 +36,8 @@ def main():
         onesimulator.onesimulation(simulation_num, list_id, list_calendar, dict_schedule)
 
     # Generate output chart.
-    chart_generater.chart_generate()
+    summary_generator.generate_summary()
+    chart_generator.chart_generate(list_id)
 
 
 if __name__ == '__main__':
