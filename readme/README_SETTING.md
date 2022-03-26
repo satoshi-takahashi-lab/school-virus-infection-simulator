@@ -186,14 +186,14 @@ You can change `classroom_XXX` as you like.<br>
 
 ```
 lesson, classroom, volume, ach
-lesson0-0, classroom0, 400, 10
-lesson0-1, classroom1, 400, 10
-lesson0-2, classroom2, 400, 10
-lesson0-3, classroom3, 400, 10
-lesson1-0, classroom0, 400, 10
-lesson1-1, classroom1, 400, 10
-lesson1-2, classroom2, 400, 10
-lesson1-3, classroom3, 400, 10
+lesson0-0, classroom0, 180, 3
+lesson0-1, classroom1, 180, 3
+lesson0-2, classroom2, 180, 3
+lesson0-3, classroom3, 180, 3
+lesson1-0, classroom0, 180, 3
+lesson1-1, classroom1, 180, 3
+lesson1-2, classroom2, 180, 3
+lesson1-3, classroom3, 180, 3
 ```
 ## Directory Structure
 ```

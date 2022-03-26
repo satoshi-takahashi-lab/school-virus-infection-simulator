@@ -1,0 +1,15 @@
+lesson,classroom,volume,ach
+lesson0-0,classroom0,150,3
+lesson1-0,classroom0,150,3
+lesson2-0,classroom0,150,3
+lesson3-0,classroom0,150,3
+lesson4-0,classroom0,150,3
+lesson5-0,classroom0,150,3
+lesson6-0,classroom0,150,3
+lesson0-1,classroom0_virtual,1000000,100
+lesson1-1,classroom1_virtual,1000000,100
+lesson2-1,classroom2_virtual,1000000,100
+lesson3-1,classroom3_virtual,1000000,100
+lesson4-1,classroom4_virtual,1000000,100
+lesson5-1,classroom5_virtual,1000000,100
+lesson6-1,classroom6_virtual,1000000,100

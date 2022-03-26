@@ -21,13 +21,13 @@ pandas==1.3.2
 SVIS is based on Susceptible-Exposed-Infectious-Removed Agent Based Model.<br>
 Students' status consists of susceptible, exposed, infectious-exposed, infectious, asymptomatic, and recovered.<br>
 Susceptible students become exposed according to <a href="#infection-probability">the infection probability</a>.<br>
-Exposed students become infectious-exposed after <a href="readme/README_SETTING.md#configini">a certain period</a>.<br>
-Infectious-exposed students become infectious or asymptomatic, <a href="readme/README_SETTING.md#configini">probabilistically</a>, after <a href="readme/README_SETTING.md#configini">a certain period</a>.<br>
-Infectious and asymptomatic students recover after <a href="readme/README_SETTING.md#configini">a certain period</a>.<br>
-Infectious-exposed and asymptomatic students infect susceptible students according to <a href="#infection-probability">infection probability</a>.<br>
+Exposed students become infectious-exposed after <a href="#configini">a certain period</a>.<br>
+Infectious-exposed students become infectious or asymptomatic, <a href="#configini">probabilistically</a>, after <a href="#configini">a certain period</a>.<br>
+Infectious and asymptomatic students recover after <a href="#configini">a certain period</a>.<br>
+Infectious-exposed and asymptomatic students infect susceptible students according to <a href="#configini">infection probability</a>.<br>
 Infectious components are the students who develop symptoms and take the day off.<br>
 Asymptomatic students do not develop symptoms and continue school.<br>
-SVIS generates students from one to <a href="readme/README_SETTING.md#configini">agent_num</a>(number of students) and makes student one as infectious-exposed on day 0.<br>
+SVIS generates students from one to <a href="#configini">agent_num</a>(number of students) and makes student one as infectious-exposed on day 0.<br>
 <br>
 <img src="https://user-images.githubusercontent.com/89981267/138493715-a6b62088-a2de-47db-b275-7d2a4d23b332.png" width="500"><br>
 
@@ -105,7 +105,7 @@ Self-contained: Students take the same lesson in the same classroom.<br>
 Departmentalized: Students take individual lessons in different classrooms.<br>
 
 ### Schedule Type
-|  | P100_Ba | P50_HD_2G-1 | P50_D_2G-1 | P50_Ds_2G-1 | P50_W_2G-1 |
+|  | Type (i)<br>Pre-COVID-19 | Type (ix)<br>UNESCO 1 | Type (viii)<br>UNESCO 2A | Type (vii)<br>UNESCO 2B | Type (vi)<br>UNESCO 3 |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | Number of groups |1|2|2|2|2|
 | Number of face-to-face lesson groups <br> at one time |1|1|1|1|1|
@@ -114,7 +114,7 @@ Departmentalized: Students take individual lessons in different classrooms.<br>
 | Percentage of face-to-face lessons |100%|50%|50%|50%|50%|
 
 ### Correspondence Table between UNESCO's Sample Schedules and Example (UNESCO, 2020)
-<img src="https://user-images.githubusercontent.com/89981267/138521876-266b6bbf-aad1-45f3-900b-a7d2e89eae6b.png" width="500"><br>
+<img src="https://user-images.githubusercontent.com/89981267/160249796-79bb7b32-1001-4721-99bc-ef4c7a809fcd.jpg" width="500"><br>
 
 ### Result of Example
 
@@ -133,10 +133,11 @@ Schedule files are generated based on input/config.ini.<br>
 <img src="https://user-images.githubusercontent.com/89981267/138511531-fdcc2b1d-cff6-4b80-9a79-0e2ae7760fcf.png" width="250"><br>
 
 #### Departmentalized
-<img src="https://user-images.githubusercontent.com/89981267/138541121-d6c2ca75-9533-4d1b-ac8c-b9c977192dd0.png" width="700"><br>
+<img src="https://user-images.githubusercontent.com/89982386/149624848-6b0db713-3530-4d90-bc09-5d30da049542.png" width="700"><br>
 
 #### Self-contained
-<img src="https://user-images.githubusercontent.com/89981267/138541147-9e2bc778-7560-45a8-b9d8-f843b1327d3f.png" width="700"><br>
+<img src="https://user-images.githubusercontent.com/89982386/149624861-8296d266-f0dd-40ad-b3aa-b02a753c367c.png" width="700"><br>
+
 
 
 ## References
