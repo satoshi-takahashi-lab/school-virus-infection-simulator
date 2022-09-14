@@ -23,6 +23,11 @@ EXPOSED_LIMIT_DAYS = 3
 INFECTING_EXPOSED_LIMIT_DAYS = 2
 INFECTED_LIMIT_DAYS = 14
 INFECTED_ASYMPTOMATIC_LIMIT_DAYS = 8
+# Antigentest
+ANTIGENTEST_NUM = 0
+TRUE_POSITIVE_RATE = 0.8
+FALSE_POSITIVE_RATE = 0.8
+ANTIGEN_POSITIVE_LIMIT_DAYS = 8
 # Generate.
 GENERATE = False
 AGENT_NUM = 480
@@ -37,16 +42,24 @@ GENERATE_SEED = None
 LOGGER_DIR = ['log']
 AGENT_STATUS_LOGGER_PATH = r'agent_status_logger.csv'
 AGENT_STATUS_LOGGER_COUNT_PATH = r'agent_status_logger_count.csv'
+AGENT_ANTIGEN_LOGGER_PATH = r'agent_antigen_logger.csv'
+AGENT_ANTIGEN_LOGGER_COUNT_PATH = r'agent_antigen_logger_count.csv'
+AGENT_OFFLINE_ONLINE_LOGGER_PATH = r'agent_offline_online_logger.csv'
+AGENT_OFFLINE_ONLINE_LOGGER_COUNT_PATH = r'agent_offline_online_logger_count.csv'
 CLASSROOM_INFECTION_RATE_LOGGER_PATH = r'classroom_infection_rate_logger.csv'
 SUMMARY_DIR = ['summary']
 PATH_AGENT_STATUS_SUMMARY_DAYS = r'summary_agent_status_count_eachDay.csv'
 PATH_AGENT_STATUS_SUMMARY_SIMULATIONS = r'summary_agent_status_count_eachSim.csv'
 PATH_AGENT_STATUS_SUMMARY_DAYS_WITH_CUMSUM = r'summary_agent_status_count-cumsum_eachDay.csv'
 PATH_AGENT_STATUS_SUMMARY_SIMULATIONS_WITH_CUMSUM = r'summary_agent_status_count-cumsum_eachSim.csv'
+PATH_AGENT_ANTIGEN_STATUS_SUMMARY_DAYS = r'summary_agent_antigen_status_count_eachDay.csv'
+PATH_AGENT_OFFLINE_ONLINE_SUMMARY_EACH_AGENTS = r'summary_agent_offline_online_count_eachAgent.csv'
 PATH_CLASSROOM_INFECTION_RATE_SUMMALY = r'summary_classroom_infection_rate_allSim.csv'
 SUMMARY_GRAPH_DIR = ['graph']
 PATH_AGENT_STATUS_SUMMARY_COUNT_TIMESERIES_GRAPH = r'summary_agent_status_count_{}_timeseries.png'
 PATH_AGENT_STATUS_SUMMARY_COUNT_BOXPLOT_GRAPH = r'summary_agent_status_count_{}-{}-{}_boxplot.png'
+PATH_AGENT_ANTIGEN_STATUS_SUMMARY_COUNT_TIMESERIES_GRAPH = r'summary_agent_antigen_status_count_{}_timeseries.png'
+PATH_AGENT_ANTIGEN_STATUS_SUMMARY_COUNT_BOXPLOT_GRAPH = r'summary_agent_antigen_status_count_{}-{}-{}_boxplot.png'
 
 # For generating input data.
 AGENT_SCHEDULE_DIR = ['input', 'agent_schedule']
@@ -74,8 +87,17 @@ INFECTING_EXPOSED = 'I_E'
 INFECTED = 'I'
 INFECTED_ASYMPTOMATIC = 'I_A'
 RECOVERED = 'R'
-STATUSLIST = [SUSCEPTIBLE, PRE_EXPOSED, EXPOSED, INFECTING_EXPOSED, INFECTED, INFECTED_ASYMPTOMATIC, RECOVERED]
-
+STATUS_LIST = [SUSCEPTIBLE, PRE_EXPOSED, EXPOSED, INFECTING_EXPOSED, INFECTED, INFECTED_ASYMPTOMATIC, RECOVERED]
+# Agent antigen test status
+TRUE_POSITIVE = "TP"
+FALSE_POSITIVE = "FP"
+NOT_TESTED = "NT"
+ANTIGEN_STATUS_LIST = [TRUE_POSITIVE, FALSE_POSITIVE, NOT_TESTED]
+# Agent offline online status
+OFFLINE = "OFF"
+ONLINE = "ON"
+NO_LESSON = "NL"
+OFFLINE_ONLINE_STATUS_LIST = [OFFLINE, ONLINE, NO_LESSON]
 
 def set_parameter(config_ini_path):
     """ Read a config file and set parameters. """
@@ -107,6 +129,7 @@ def set_parameter(config_ini_path):
     global LOGGER_DIR
     global SUMMARY_DIR
     global SUMMARY_GRAPH_DIR
+    global ANTIGENTEST_NUM
 
     # Check error and read a config file.
     if not os.path.exists(os.path.join(*config_ini_path)):
@@ -143,6 +166,9 @@ def set_parameter(config_ini_path):
     else:
         print("Mask parameter should be Boolean.")
         sys.exit()
+
+    # set [ANTIGENTEST] parameters
+    ANTIGENTEST_NUM = int(config['ANTIGENTEST']['antigentest_num'])
 
     # Set [infection] parameters.
     PULMONARY_VENTILATIION_RATE = float(config['INFECTION']['pulmonary_ventilation_rate'])
@@ -190,3 +216,7 @@ def set_random_seed():
 def get_random():
     """ Return random number [0.0, 1.0). """
     return random.random()
+
+
+def get_random_sample(temp_list, temp_samples):
+    return random.sample(temp_list, temp_samples)

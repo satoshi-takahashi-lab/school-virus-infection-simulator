@@ -15,13 +15,16 @@ class Agent:
     __lesson = ''
     # Exposed days of agent.
     __exposed_days = 0
-    # ingecting exposed days of agent.
+    # Infecting exposed days of agent.
     __infecting_exposed_days = 0
-    # infected days of agent.
+    # Infected days of agent.
     __infected_days = 0
     # Infected asymptomatic days of agent.
     __infected_asymptomatic_days = 0
-
+    # Antigen test status. EX) TP, FP, NT
+    __antigen_status = config.NOT_TESTED
+    # Antigen test positive days of agent.
+    __antigen_positive_days = 0
 
     def __init__(self, temp_name, temp_status):
         self.set_name(temp_name)
@@ -56,6 +59,25 @@ class Agent:
 
     def get_lesson(self):
         return self.__lesson
+
+    def set_antigen_status(self, antigen_status):
+        self.__antigen_status = antigen_status
+
+    def get_antigen_status(self):
+        return self.__antigen_status
+
+    def get_offline_online_status(self):
+        temp_offline_online_status = config.OFFLINE
+        if self.__place == "":
+            temp_offline_online_status = config.NO_LESSON
+        elif self.__status == config.INFECTED:
+            temp_offline_online_status = config.NO_LESSON
+        elif "virtual" in self.__place:
+            temp_offline_online_status = config.ONLINE
+        elif self.__antigen_status in [config.TRUE_POSITIVE, config.FALSE_POSITIVE]:
+            temp_offline_online_status = config.ONLINE
+
+        return temp_offline_online_status
 
     def set_initial_infected(self):
         self.__status = config.INFECTING_EXPOSED
@@ -98,6 +120,12 @@ class Agent:
             self.__infected_asymptomatic_days += 1
             if self.__infected_asymptomatic_days >= config.INFECTED_ASYMPTOMATIC_LIMIT_DAYS:
                 self.set_status(config.RECOVERED)
+
+        if self.__antigen_status in [config.TRUE_POSITIVE, config.FALSE_POSITIVE]:
+            self.__antigen_positive_days += 1
+            if self.__antigen_positive_days >= config.ANTIGEN_POSITIVE_LIMIT_DAYS:
+                self.set_status(config.NOT_TESTED)
+                self.__antigen_positive_days = 0
 
     def get_exposed_days(self):
         return self.__exposed_days

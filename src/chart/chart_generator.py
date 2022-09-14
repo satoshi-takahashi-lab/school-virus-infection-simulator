@@ -26,12 +26,13 @@ def chart_generate(list_id):
     """ Generate charts from a summaly of SVIS results. """
     # Local variables.
     name_suspectible = "S+P_E"
-    list_target_status = [name_suspectible] + config.STATUSLIST[2:]
+    list_target_status = [name_suspectible] + config.STATUS_LIST[2:]
     num_agent = len(list_id[0])
 
     # Read summaly files.
     df_stats_day = pd.read_csv(os.path.join(*config.SUMMARY_DIR, config.PATH_AGENT_STATUS_SUMMARY_DAYS), encoding="utf_8_sig")
     df_stats_cumsum_sim = pd.read_csv(os.path.join(*config.SUMMARY_DIR, config.PATH_AGENT_STATUS_SUMMARY_SIMULATIONS_WITH_CUMSUM), encoding="utf_8_sig")
+    df_offline_online_each_student = pd.read_csv(os.path.join(*config.SUMMARY_DIR, config.PATH_AGENT_OFFLINE_ONLINE_SUMMARY_EACH_AGENTS), encoding="utf_8_sig")
 
     # Generate charts.
     generate_timeseries_graph("sier", df_stats_day, list_target_status, num_agent)
@@ -39,6 +40,9 @@ def chart_generate(list_id):
     generate_boxplot_graph(df_stats_cumsum_sim, [config.INFECTED], ["perday", "max"], num_agent)
     generate_boxplot_graph(df_stats_cumsum_sim, [config.INFECTED], ["perweek", "max"], num_agent*7)
     generate_boxplot_graph(df_stats_cumsum_sim, [config.INFECTED], ["per2week", "max"], num_agent*14)
+    generate_histogram_graph(df_offline_online_each_student, config.ONLINE, config.LESSON_DAYS * config.LESSON_NUM)
+    generate_histogram_graph(df_offline_online_each_student, config.OFFLINE, config.LESSON_DAYS * config.LESSON_NUM)
+    generate_histogram_graph(df_offline_online_each_student, config.NO_LESSON, config.LESSON_DAYS * config.LESSON_NUM)
 
 
 def generate_timeseries_graph(file_keyword, df_stats, list_target_status, max_ylim, list_cmap=None):
@@ -94,3 +98,23 @@ def generate_boxplot_graph(df_stats, list_target_status, list_type, max_ylim):
         fig.savefig(os.path.join(*config.SUMMARY_GRAPH_DIR, config.PATH_AGENT_STATUS_SUMMARY_COUNT_BOXPLOT_GRAPH.format(one_status, tgt_index, tgt_stats)))
         plt.clf()
         plt.close()
+
+
+def generate_histogram_graph(df_stats, target_status, max_xlim):
+    """ Generate a timeseries graph for each target status using summary dataframe of SVIS. """
+    # Generate figure frame.
+    fig, ax = plt.subplots(figsize=(8.0, 6.0))
+
+    # Plot each status.
+    plt.hist(df_stats[target_status].values.tolist(), density=True, range=(0, max_xlim))
+    # Set legend.
+    ax.set_xlabel('Day')
+    ax.set_ylabel('Number of agents')
+    # Set grid.
+    ax.grid()
+    plt.grid(color='black', linestyle='dotted', linewidth=1)
+    fig.tight_layout()
+    # Save figure.
+    fig.savefig(os.path.join(*config.SUMMARY_GRAPH_DIR, config.PATH_AGENT_STATUS_SUMMARY_COUNT_TIMESERIES_GRAPH.format(target_status)))
+    plt.clf()
+    plt.close()

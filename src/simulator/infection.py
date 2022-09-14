@@ -8,12 +8,13 @@ def judge_infection_wells_riley(agent_list, classroom_volume, classroom_ach):
     susceptible_number_list = []
     infectious_number = 0
     for temp_agent in agent_list:
-        if temp_agent.get_status() == config.SUSCEPTIBLE:
-            susceptible_number_list.append(temp_agent)
-        elif temp_agent.get_status() == config.INFECTING_EXPOSED:
-            infectious_number += 1
-        elif temp_agent.get_status() == config.INFECTED_ASYMPTOMATIC:
-            infectious_number += 1
+        if temp_agent.get_antigen_status == config.NOT_TESTED:
+            if temp_agent.get_status() == config.SUSCEPTIBLE:
+                susceptible_number_list.append(temp_agent)
+            elif temp_agent.get_status() == config.INFECTING_EXPOSED:
+                infectious_number += 1
+            elif temp_agent.get_status() == config.INFECTED_ASYMPTOMATIC:
+                infectious_number += 1
 
     # Calculate infection rate.
     infection_rate_w_mask, infection_rate_wo_mask = infection_formula("wells_riley", infectious_number, classroom_volume, classroom_ach)

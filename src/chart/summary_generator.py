@@ -11,10 +11,15 @@ def generate_summary():
     # Prepare list of target files.
     logger_files = glob.glob(os.path.join(*config.OUTPUT_ROOT_DIR, "log", "*.csv"))
     list_path_agent_status_count = [one_log for one_log in logger_files if config.AGENT_STATUS_LOGGER_COUNT_PATH in one_log]
+    list_path_agent_offline_online = [one_log for one_log in logger_files if
+                                    config.AGENT_OFFLINE_ONLINE_LOGGER_PATH in one_log]
     list_path_classroom_infection_log = [one_log for one_log in logger_files if config.CLASSROOM_INFECTION_RATE_LOGGER_PATH in one_log]
 
     # Summarize agent status count data.
     df_stats_sim, df_stats_day, df_stats_cumsum_sim, df_stats_cumsum_day = summarize_agent_status_count(list_path_agent_status_count)
+
+    # Summarize agent offline online data.
+    df_offline_online_each_student = summarize_agent_offline_online(list_path_agent_offline_online)
 
     # Summarize classroom infection rate data.
     df_freq_inf_rate_with_mask, df_freq_inf_rate_without_mask = summarize_classroom_infection_rate(list_path_classroom_infection_log)
@@ -24,6 +29,7 @@ def generate_summary():
     save_df(config.SUMMARY_DIR, config.PATH_AGENT_STATUS_SUMMARY_DAYS, df_stats_day)
     save_df(config.SUMMARY_DIR, config.PATH_AGENT_STATUS_SUMMARY_SIMULATIONS_WITH_CUMSUM, df_stats_cumsum_sim)
     save_df(config.SUMMARY_DIR, config.PATH_AGENT_STATUS_SUMMARY_DAYS_WITH_CUMSUM, df_stats_cumsum_day)
+    save_df(config.SUMMARY_DIR, config.PATH_AGENT_OFFLINE_ONLINE_SUMMARY_EACH_AGENTS, df_offline_online_each_student)
     if config.MASK:
         save_df(config.SUMMARY_DIR, config.PATH_CLASSROOM_INFECTION_RATE_SUMMALY, df_freq_inf_rate_with_mask)
     else:
@@ -36,7 +42,7 @@ def summarize_agent_status_count(list_path):
         of each day/simulation or cumulative sum of each day/simulation. """
     # Local variables.
     name_suspectible = "S+P_E"
-    list_target_status = [name_suspectible] + config.STATUSLIST
+    list_target_status = [name_suspectible] + config.STATUS_LIST
     dict_diff = {"perweek": 7, "per2week": 14}
 
     # Prepare data
@@ -160,6 +166,22 @@ def calc_stats_with_cumsum(df_tgt, list_tgt_status, dict_diff, calc_type=0):
 
     return output_df
 
+
+def summarize_agent_offline_online(list_path):
+    """ Summarize results of agents' offline online logs"""
+    # Prepare data
+    offline_lesson_list = []
+    online_lesson_list = []
+    no_lesson_list = []
+    for idx, one_file in enumerate(list_path):
+        df_agent_offline_online = pd.read_csv(one_file, encoding="utf_8_sig")
+        df_agent_offline_online = df_agent_offline_online.drop(["daycount", "step"], axis=1)
+        offline_lesson_list.extend((df_agent_offline_online == config.OFFLINE).sum().values.tolist())
+        online_lesson_list.extend((df_agent_offline_online == config.ONLINE).sum().values.tolist())
+        no_lesson_list.extend((df_agent_offline_online == config.NO_LESSON).sum().values.tolist())
+    df_offline_online_each_student = pd.DataFrame(list(zip(offline_lesson_list, online_lesson_list, no_lesson_list)),
+                                                  columns=[config.ONLINE, config.OFFLINE, config.NO_LESSON])
+    return df_offline_online_each_student
 
 def summarize_classroom_infection_rate(list_path):
     """ Summarize results of classroom infection rate by SVIS. \n
