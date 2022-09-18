@@ -176,8 +176,8 @@ def summarize_agent_offline_online(list_path):
     for idx, one_file in enumerate(list_path):
         df_agent_offline_online = pd.read_csv(one_file, encoding="utf_8_sig")
         df_agent_offline_online = df_agent_offline_online.drop(["daycount", "step"], axis=1)
-        offline_lesson_list.extend((df_agent_offline_online == config.OFFLINE).sum().values.tolist())
-        online_lesson_list.extend((df_agent_offline_online == config.ONLINE).sum().values.tolist())
+        offline_lesson_list.extend((df_agent_offline_online == config.ONLINE).sum().values.tolist())
+        online_lesson_list.extend((df_agent_offline_online == config.OFFLINE).sum().values.tolist())
         no_lesson_list.extend((df_agent_offline_online == config.NO_LESSON).sum().values.tolist())
     df_offline_online_each_student = pd.DataFrame(list(zip(offline_lesson_list, online_lesson_list, no_lesson_list)),
                                                   columns=[config.ONLINE, config.OFFLINE, config.NO_LESSON])

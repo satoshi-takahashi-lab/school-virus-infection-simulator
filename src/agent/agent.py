@@ -124,7 +124,7 @@ class Agent:
         if self.__antigen_status in [config.TRUE_POSITIVE, config.FALSE_POSITIVE]:
             self.__antigen_positive_days += 1
             if self.__antigen_positive_days >= config.ANTIGEN_POSITIVE_LIMIT_DAYS:
-                self.set_status(config.NOT_TESTED)
+                self.set_antigen_status(config.NOT_TESTED)
                 self.__antigen_positive_days = 0
 
     def get_exposed_days(self):
