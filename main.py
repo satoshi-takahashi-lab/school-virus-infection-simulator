@@ -9,15 +9,13 @@ from src import config, utils
 from src.generator import input_generator
 from src.simulator import onesimulator
 from src.chart import summary_generator, chart_generator
+import sys
 
 
-def main():
+def main(input_dir):
     """ Main process. """
-    # Define variables.
-    path_config = ["input", "config.ini"]
-
     # Read and set config.
-    config.set_parameter(path_config)
+    config.set_parameter(input_dir)
 
     # Generate input data.
     if config.GENERATE:
@@ -41,4 +39,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    args = sys.argv
+    main(args[1])

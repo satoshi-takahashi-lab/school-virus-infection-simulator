@@ -7,7 +7,7 @@ from src import config
 
 def read_calendar():
     """ Read calendar file. """
-    with open(os.path.join(*config.OUTPUT_ROOT_DIR, *config.CALENDAR_PATH), "r", encoding="utf_8_sig") as open_file:
+    with open(os.path.join(*config.OUTPUT_ROOT_DIR, [*config.CALENDAR_PATH][-1]), "r", encoding="utf_8_sig") as open_file:
         list_calendar = list(csv.reader(open_file))
         list_calendar = list_calendar[1:]   # Delete header.
     return list_calendar

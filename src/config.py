@@ -25,8 +25,8 @@ INFECTED_LIMIT_DAYS = 14
 INFECTED_ASYMPTOMATIC_LIMIT_DAYS = 8
 # Antigentest
 ANTIGENTEST_NUM = 0
-TRUE_POSITIVE_RATE = 0.8
-FALSE_POSITIVE_RATE = 0.8
+TRUE_POSITIVE_RATE = 0.55
+FALSE_POSITIVE_RATE = 0.02
 ANTIGEN_POSITIVE_LIMIT_DAYS = 8
 # Generate.
 GENERATE = False
@@ -62,7 +62,7 @@ PATH_AGENT_ANTIGEN_STATUS_SUMMARY_COUNT_TIMESERIES_GRAPH = r'summary_agent_antig
 PATH_AGENT_ANTIGEN_STATUS_SUMMARY_COUNT_BOXPLOT_GRAPH = r'summary_agent_antigen_status_count_{}-{}-{}_boxplot.png'
 
 # For generating input data.
-AGENT_SCHEDULE_DIR = ['input', 'agent_schedule']
+AGENT_SCHEDULE_DIR = ['agent_schedule']
 AGENT_SCHEDULE_PATH_LIST = {
     'mon' : r'agent_schedule_mon.csv',
     'tue' : r'agent_schedule_tue.csv',
@@ -70,7 +70,7 @@ AGENT_SCHEDULE_PATH_LIST = {
     'thu' : r'agent_schedule_thu.csv',
     'fri' : r'agent_schedule_fri.csv',
 }
-CLASSROOM_DIR = ['input', 'classroom_schedule']
+CLASSROOM_DIR = ['classroom_schedule']
 CLASSROOM_PATH_LIST = {
     'mon' : r'classroom_mon.csv',
     'tue' : r'classroom_tue.csv',
@@ -99,7 +99,7 @@ ONLINE = "ON"
 NO_LESSON = "NL"
 OFFLINE_ONLINE_STATUS_LIST = [OFFLINE, ONLINE, NO_LESSON]
 
-def set_parameter(config_ini_path):
+def set_parameter(input_dir):
     """ Read a config file and set parameters. """
     global CALENDAR_PATH
     global OUTPUT_ROOT_DIR
@@ -132,25 +132,26 @@ def set_parameter(config_ini_path):
     global ANTIGENTEST_NUM
 
     # Check error and read a config file.
-    if not os.path.exists(os.path.join(*config_ini_path)):
-        print(os.path.join(*config_ini_path) + " is not exists")
+    if not os.path.exists(os.path.join(input_dir, "config.ini")):
+        print(os.path.join(input_dir, "config.ini") + " is not exists")
         sys.exit()
     config = configparser.ConfigParser()
-    config.read(os.path.join(*config_ini_path), encoding="utf_8")
+    config.read(os.path.join(input_dir, "config.ini"), encoding="utf_8")
 
     # Set [simulation] parameters.
     # Caution: Debug config errors that occured when string is enclosed quotation mark.
     now = datetime.datetime.now()
-    OUTPUT_ROOT_DIR = [config['SIMULATION']['output_root_dir']] + ['{0:%Y%m%d_%H%M%S}'.format(now)]
+    #OUTPUT_ROOT_DIR = [config['SIMULATION']['output_root_dir']] + ['{0:%Y%m%d_%H%M%S}'.format(now)]
+    OUTPUT_ROOT_DIR = [config['SIMULATION']['output_root_dir']]
     os.makedirs(os.path.join(*OUTPUT_ROOT_DIR, 'input'), exist_ok=True)
-    shutil.copy(os.path.join(*config_ini_path), os.path.join(*OUTPUT_ROOT_DIR, *config_ini_path))
+    shutil.copy(os.path.join(input_dir, "config.ini"), os.path.join(*OUTPUT_ROOT_DIR, "input", "config.ini"))
     if config['SIMULATION']['calendar_path'] != "":
         GENERATE = False
-        CALENDAR_PATH = ['input'] + [config['SIMULATION']['calendar_path']]
-        shutil.copy(os.path.join(*CALENDAR_PATH), os.path.join(*OUTPUT_ROOT_DIR, *CALENDAR_PATH))
+        CALENDAR_PATH = [input_dir] + [config['SIMULATION']['calendar_path']]
+        shutil.copy(os.path.join(*CALENDAR_PATH), os.path.join(*OUTPUT_ROOT_DIR, *[config['SIMULATION']['calendar_path']]))
     else:
         GENERATE = True
-        CALENDAR_PATH = ['input', 'generate_sim_calendar.csv']
+        CALENDAR_PATH = [input_dir] + ['generate_sim_calendar.csv']
     SIMULATION_COUNT = int(config['SIMULATION']['simulation_count'])
     LESSON_TIME = int(config['SIMULATION']['lesson_time'])
     if config['SIMULATION']['random_seed'] in ["", "None"]:
@@ -194,8 +195,8 @@ def set_parameter(config_ini_path):
         else:
             GENERATE_SEED = config['GENERATE']['generate_seed']
     else:
-        shutil.copytree(os.path.join(*AGENT_SCHEDULE_DIR), os.path.join(*OUTPUT_ROOT_DIR, *AGENT_SCHEDULE_DIR))
-        shutil.copytree(os.path.join(*CLASSROOM_DIR), os.path.join(*OUTPUT_ROOT_DIR, *CLASSROOM_DIR))
+        shutil.copytree(os.path.join(input_dir, *AGENT_SCHEDULE_DIR), os.path.join(*OUTPUT_ROOT_DIR, *AGENT_SCHEDULE_DIR))
+        shutil.copytree(os.path.join(input_dir, *CLASSROOM_DIR), os.path.join(*OUTPUT_ROOT_DIR, *CLASSROOM_DIR))
     AGENT_SCHEDULE_DIR = OUTPUT_ROOT_DIR + AGENT_SCHEDULE_DIR
     CLASSROOM_DIR = OUTPUT_ROOT_DIR + CLASSROOM_DIR
 
